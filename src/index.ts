@@ -1,5 +1,8 @@
 import './index.css';
-import { MyClass } from './example-unit';
+import { watchModel } from './watch/watchModel';
+import { watchView } from './watch/watchView';
+import { watchController } from './watch/watchController';
 
-const a = new MyClass(2);
-console.log('number is', a.get());
+document.addEventListener('DOMContentLoaded', () => {
+   new watchController(new watchModel(), new watchView(1));
+});

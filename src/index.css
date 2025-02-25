@@ -1,3 +1,105 @@
-h1 {
+body {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: grey;
+    position: relative; /* Ajouté pour aider à la position absolue de la notification */
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* Changer la direction pour mettre la notification en haut */
+    position: relative; /* Assurez-vous que la notification se place bien par rapport à main */
+}
+
+.container {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px 10px black;
+}
+
+.mode-button, .light-button {
+    position: absolute;
+    transform: translateX(50%);
+    width: 45px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, background 0.3s;
+}
+
+.mode-button {
+    top: -20px;
+    right: 30%;
+}
+
+.light-button {
+    bottom: 10px;
+    left: -10%;
+}
+
+.mode-button:active, .light-button:active {
+    transform: translateX(50%) scale(0.9);
+    background-color: darkgray;
+}
+
+.timer-yellow, .timer-white {
+    font-size: 25px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(190, 195, 199);
+    width: 80%;
+}
+
+.timer-yellow {
+    background-color: #FBE106;
+}
+
+.timer span {
+    padding: 3px;
+}
+
+.blink {
+    animation: blinkAnimation 1s step-start infinite;
+}
+
+@keyframes blinkAnimation {
+    50% {
+        opacity: 0;
+    }
+}
+
+.notification {
+    position: relative;
+    top: 20px;
+    font-size: 14px;
     color: red;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
 }
