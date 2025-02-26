@@ -1,4 +1,3 @@
-import { ColorWatchClassType } from "../enumColor";
 import { BlinkableType, typeofBlinkable } from "./type";
 
 export class watchView {
@@ -11,6 +10,7 @@ export class watchView {
 
   private buttonMode: HTMLButtonElement;
   private buttonLight: HTMLButtonElement;
+  private buttonIncrease: HTMLButtonElement;
 
   private notification: HTMLElement;
 
@@ -20,16 +20,9 @@ export class watchView {
     this.minuteDisplay = document.getElementById(`min-${id}`);
     this.secondDisplay = document.getElementById(`sec-${id}`);
     this.buttonMode = document.getElementById(`mode-button-${id}`) as HTMLButtonElement;
+    this.buttonIncrease = document.getElementById(`increase-button-${id}`)  as HTMLButtonElement;
     this.buttonLight = document.getElementById(`light-button-${id}`) as HTMLButtonElement;
     this.notification = document.getElementById(`notification-${id}`) as HTMLButtonElement;
-  }
-
-  getHourDisplay(): HTMLElement {
-    return this.hourDisplay;
-  }
-
-  getMinuteDisplay(): HTMLElement {
-    return this.minuteDisplay;
   }
 
   renderDom(): void {
@@ -38,6 +31,7 @@ export class watchView {
       <main>
         <div class="container">
           <button id="mode-button-${this.id}" class="mode-button">Mode</button>
+          <button id="increase-button-${this.id}" class="increase-button">Increase</button>
           <button id="light-button-${this.id}" class="light-button">Light</button>
           <div id="timer-${this.id}" class="timer-white">
             <span id="hour-${this.id}" class="hr">00</span>: 
@@ -50,55 +44,61 @@ export class watchView {
     `);
   }
 
-  getButtonMode() {
+  getButtonMode():HTMLButtonElement  {
     return this.buttonMode;
   }
 
-  getButtonLight() {
+  getButtonIncrease(): HTMLButtonElement {
+    return this.buttonIncrease;
+  }
+
+  getButtonLight(): HTMLButtonElement {
     return this.buttonLight;
   }
 
-  renderTime(date: string) {
-    const [hours, minutes, seconds] = date.split(':');
-    
-    // Formater l'heure, minute et seconde avec un zéro devant si nécessaire
-    const formattedHours = hours;
-    const formattedMinutes = minutes;
-    const formattedSeconds = seconds;
-  
-    // Afficher l'heure dans l'élément correspondant
-    if (formattedHours !== this.hourDisplay.innerText && !this.hourDisplay.hasAttribute('contenteditable')) {
-      this.hourDisplay.innerText = formattedHours;
-    }
-  
-    // Afficher les minutes dans l'élément correspondant
-    if (formattedMinutes !== this.minuteDisplay.innerText && !this.minuteDisplay.hasAttribute('contenteditable')) {
-      this.minuteDisplay.innerText = formattedMinutes;
-    }
-  
-    // Afficher les secondes dans l'élément correspondant
-    if (formattedSeconds !== this.secondDisplay.innerText) {
-      this.secondDisplay.innerText = formattedSeconds;
-    }
+  setHours(hours: string): void {
+    this.hourDisplay.innerText = hours;
   }
-  
 
-  updateRender(blinking: BlinkableType | null) {
+  setMinutes(minutes: string): void {
+    this.minuteDisplay.innerText = minutes;
+  }
+
+  setSeconds(seconds: string): void {
+    this.secondDisplay.innerText = seconds;
+  }
+
+  setBlinking(blinking: BlinkableType | null): void {
     typeofBlinkable.map((type) => {
       this[`${type}Display`].classList.remove('blink');
-      this[`${type}Display`].setAttribute('contenteditable', 'false');
     });
     if (blinking) {
       this[`${blinking}Display`].classList.add('blink');
-      this[`${blinking}Display`].setAttribute('contenteditable', 'true');
     }
   }
 
-  updateBackgroungColor(className: ColorWatchClassType) {
-    document.getElementById(`timer-${this.id}`).className = className;
+  setIncreaseData(updatedField: BlinkableType, newValue: string): void {
+    if (updatedField == "hour") {
+      this.setHours(newValue);
+    } else if (updatedField == "minute") {
+      this.setMinutes(newValue);
+    }
   }
 
-  renderNotification(msg: string) {
+  updateBackgroungColor(isLight: boolean): void {
+    if(isLight) {
+      document.getElementById(`timer-${this.id}`).className = 'timer-yellow';  
+    } else {
+      document.getElementById(`timer-${this.id}`).className = 'timer-white';
+    }
+  }
+
+
+  setNotification(msg: string): void {
     this.notification.innerText = msg;
+    setTimeout(() => {
+      this.notification.innerText = "";
+    }, 3000);
+    
   }
 }

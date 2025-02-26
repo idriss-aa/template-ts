@@ -31,7 +31,7 @@ main {
     box-shadow: 0px 0px 10px 10px black;
 }
 
-.mode-button, .light-button {
+.mode-button, .light-button, .increase-button {
     position: absolute;
     transform: translateX(50%);
     width: 45px;
@@ -55,6 +55,12 @@ main {
 .light-button {
     bottom: 10px;
     left: -10%;
+}
+
+.increase-button {
+    width: 60px;
+    bottom: 10px;
+    right: 5%;
 }
 
 .mode-button:active, .light-button:active {
