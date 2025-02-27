@@ -1,6 +1,6 @@
 import './index.css';
-import { watchController } from './watch/watchController';
+import { GlobalController } from './watch/GlobalController';
 
 document.addEventListener('DOMContentLoaded', () => {
-   new watchController(1);
+   new GlobalController();
 });

@@ -4,17 +4,22 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    min-height: 90vh;
     background-color: grey;
     position: relative; /* Ajouté pour aider à la position absolue de la notification */
+    padding: 20px;
 }
 
 main {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column; /* Changer la direction pour mettre la notification en haut */
+    flex-direction: row; /* Changé en row pour l'affichage horizontal */
     position: relative; /* Assurez-vous que la notification se place bien par rapport à main */
+    flex-wrap: wrap; /* Permet le retour à la ligne si l'écran est trop petit */
+    gap: 30px; /* Espace entre les horloges */
+    max-width: 1200px; /* Limite la largeur maximale */
+    padding: 20px;
 }
 
 .container {
@@ -29,6 +34,7 @@ main {
     justify-content: space-evenly;
     border-radius: 50%;
     box-shadow: 0px 0px 10px 10px black;
+    margin: 20px; /* Ajoute une marge autour de chaque horloge */
 }
 
 .mode-button, .light-button, .increase-button {
@@ -100,7 +106,7 @@ main {
 
 .notification {
     position: relative;
-    top: 20px;
+    bottom: -100px;
     font-size: 14px;
     color: red;
     text-align: center;
@@ -108,4 +114,24 @@ main {
     padding: 5px;
     color: white;
     border-radius: 5px;
+}
+
+.add-watch-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.add-watch-button:hover {
+    background-color: #45a049;
 }

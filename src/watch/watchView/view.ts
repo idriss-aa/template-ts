@@ -1,12 +1,14 @@
+import { TimeZone } from "../GlobalView/type";
 import { BlinkableType, typeofBlinkable } from "./type";
 
 export class watchView {
-
+  
   private rootElement: HTMLElement;
 
   private hourDisplay: HTMLElement;
   private minuteDisplay: HTMLElement;
   private secondDisplay: HTMLElement;
+  private timezoneDisplay: HTMLElement
 
   private buttonMode: HTMLButtonElement;
   private buttonLight: HTMLButtonElement;
@@ -23,12 +25,12 @@ export class watchView {
     this.buttonIncrease = document.getElementById(`increase-button-${id}`)  as HTMLButtonElement;
     this.buttonLight = document.getElementById(`light-button-${id}`) as HTMLButtonElement;
     this.notification = document.getElementById(`notification-${id}`) as HTMLButtonElement;
+    this.timezoneDisplay = document.getElementById(`timezone-${id}`) as HTMLButtonElement;
   }
 
   renderDom(): void {
-    this.rootElement = document.querySelector('body') as HTMLElement;
+    this.rootElement = document.querySelector('main') as HTMLElement;
     this.rootElement.insertAdjacentHTML('beforeend', `
-      <main>
         <div class="container">
           <button id="mode-button-${this.id}" class="mode-button">Mode</button>
           <button id="increase-button-${this.id}" class="increase-button">Increase</button>
@@ -38,9 +40,9 @@ export class watchView {
             <span id="min-${this.id}" class="min">00</span>:
             <span id="sec-${this.id}" class="sec">00</span>
           </div>
+          <span id="timezone-${this.id}" class="timezone">${this.timezoneDisplay}<span/>
+          <span id="notification-${this.id}" class="notification"></span>
         </div>
-        <span id="notification-${this.id}" class="notification"></span>
-      </main>
     `);
   }
 
@@ -66,6 +68,10 @@ export class watchView {
 
   setSeconds(seconds: string): void {
     this.secondDisplay.innerText = seconds;
+  }
+
+  setTimeZone(timeZone: TimeZone): void {
+    this.timezoneDisplay.innerText =  timeZone.name;
   }
 
   setBlinking(blinking: BlinkableType | null): void {
@@ -99,6 +105,5 @@ export class watchView {
     setTimeout(() => {
       this.notification.innerText = "";
     }, 3000);
-    
   }
 }

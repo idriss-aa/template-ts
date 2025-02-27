@@ -1,3 +1,4 @@
+import { TimeZone } from "../GlobalView/type";
 import { watchModel } from "../watchModel";
 import { watchView } from "../watchView";
 
@@ -7,9 +8,10 @@ export class watchController {
   private watchModel: watchModel;
   private clickTimeout: NodeJS.Timeout | null = null;
 
-  constructor(id: number) {
-    this.watchModel = new watchModel();
+  constructor(id: number, timeZone: TimeZone) {
+    this.watchModel = new watchModel(timeZone);
     this.watchView = new watchView(id);
+    this.watchView.setTimeZone(timeZone);
     this.init();
   }
 
