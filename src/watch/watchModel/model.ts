@@ -1,9 +1,11 @@
 import { BlinkableType } from "../../type";
+import { TimeZone } from "../GlobalView/type";
 import { Hours, MinutesAndSeconds, SubscribersAction, WatchSubscribers } from "./type";
 
 export class watchModel {
 
   private time: Date;
+  private timezone: TimeZone;
   private blinking: BlinkableType = null;
 
   private isLightMode: boolean;
@@ -12,8 +14,9 @@ export class watchModel {
   private fieldToIncrease: BlinkableType = null;
   private notification: string ;
 
-  constructor() {
+  constructor(timezone: TimeZone) {
     this.time = new Date();
+    this.timezone = timezone;
 
     this.isLightMode = false;
     this.notification = '';
@@ -58,6 +61,12 @@ export class watchModel {
     }
   }
 
+  private getTimeWithOffset(): Date {
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    return new Date(utc + (3600000 * this.timezone.offset));
+  }
+
   startClock(): void {
     this.notify("setSeconds");
     this.notify("setMinutes");
@@ -65,6 +74,7 @@ export class watchModel {
 
     this.interval = setInterval(() => {
       const copyDate = new Date(this.time);
+      this.time = this.getTimeWithOffset();
       this.time.setSeconds(this.time.getSeconds() + 1);
       this.notify("setSeconds");
       if(copyDate.getMinutes() !== this.time.getMinutes()) {
