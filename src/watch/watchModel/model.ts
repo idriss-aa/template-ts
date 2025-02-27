@@ -140,10 +140,13 @@ export class watchModel {
     if (type == "hour") {
       this.fieldToIncrease = "hour";
       this.setHours(this.time.getHours() + 1);
+      this.notify("setHours");
       this.setNotification("Hour is updated successfully");
     } else if (type == "minute") {
       this.fieldToIncrease = "minute";
       this.setMinutes(this.time.getMinutes() + 1);
+      this.notify("setMinutes");
+      this.notify("setHours");
       this.setNotification("Minute is updated successfully");
     }
     this.notify("setIncrease");
